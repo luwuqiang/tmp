@@ -1,5 +1,6 @@
 package com.leederedu.qsearch.core;
 
+import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.handler.SearchHandler;
 import com.leederedu.qsearch.handler.UpdateHandler;
 
@@ -10,13 +11,16 @@ public class QSUtils {
 
     private static QSearcher qSearcher;
 
-
     public static SearchHandler searchHandler() {
         return searchHandler(IndexName.INDEX);
     }
 
     public static SearchHandler searchHandler(IndexName index) {
-        return qSearcher.getCore(index).getSearchHandler();
+        SolrCore solrCore = qSearcher.getCore(index);
+        if (solrCore == null) {
+            throw new RuntimeException("not found index name=" + index);
+        }
+        return solrCore.getSearchHandler();
     }
 
     public static UpdateHandler updateHandler() {
@@ -24,11 +28,14 @@ public class QSUtils {
     }
 
     private static UpdateHandler updateHandler(IndexName index) {
-        return qSearcher.getCore(index).getUpdateHandler();
+        SolrCore solrCore = qSearcher.getCore(index);
+        if (solrCore == null) {
+            throw new RuntimeException("not found index name=" + index);
+        }
+        return solrCore.getUpdateHandler();
     }
 
-    public static void setqSearcher(QSearcher qSearcher) {
+    public void setqSearcher(QSearcher qSearcher) {
         QSUtils.qSearcher = qSearcher;
     }
-
 }

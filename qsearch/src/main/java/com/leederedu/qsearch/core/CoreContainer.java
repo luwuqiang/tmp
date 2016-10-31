@@ -1,7 +1,8 @@
 package com.leederedu.qsearch.core;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.leederedu.qsearch.core.cfg.NodeConfig;
+import com.leederedu.qsearch.core.cfg.SolrConfig;
 import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.utils.DefaultSolrThreadFactory;
 import com.leederedu.qsearch.utils.ExecutorUtil;
@@ -11,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Locale;
-import java.util.Properties;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,72 +32,29 @@ public class CoreContainer {
 
     private ExecutorService coreContainerWorkExecutor = ExecutorUtil.newMDCAwareCachedThreadPool(
             new DefaultSolrThreadFactory("coreContainerWorkExecutor"));
-    protected Properties containerProperties;
     private boolean shutDown;
-    protected final NodeConfig cfg;
-    protected final CoresLocator coresLocator;
+    private final SolrConfig solrConfig;
     final QSearchCores solrCores = new QSearchCores(this);
 
-    public CoreContainer(NodeConfig config, Properties properties, boolean asyncSolrCoreLoad) {
-        this(config, properties, new CorePropertiesLocator(config.getCoreRootDirectory()), asyncSolrCoreLoad);
-    }
-
-    public CoreContainer(NodeConfig config, Properties properties, CoresLocator locator, boolean asyncCoreLoad) {
-        this.cfg = checkNotNull(config);
-        this.containerProperties = new Properties(properties);
-        this.coresLocator = locator;
+    public CoreContainer(SolrConfig solrConfig, boolean asyncCoreLoad) {
+        this.solrConfig = checkNotNull(solrConfig);
     }
 
     public void load() {
-        // setup executor to load cores in parallel
-        final ExecutorService coreLoadExecutor = ExecutorUtil.newMDCAwareFixedThreadPool(
-                cfg.getCoreLoadThreadCount(),
-                new DefaultSolrThreadFactory("coreLoadExecutor"));
-        final List<Future<SolrCore>> futures = new ArrayList<>();
-
         try {
-            List<CoreDescriptor> cds = coresLocator.discover(this);
+            List<CoreDescriptor> cds = Lists.newArrayList();
+            cds.add(new CoreDescriptor("index", solrConfig.pro));
             checkForDuplicateCoreNames(cds);
 
             for (final CoreDescriptor cd : cds) {
                 if (cd.isLoadOnStartup()) {
-                    futures.add(coreLoadExecutor.submit(new Callable<SolrCore>() {
-                        @Override
-                        public SolrCore call() throws Exception {
-                            SolrCore core;
-                            try {
-                                core = create(cd, false);
-                            } finally {
-                            }
-                            return core;
-                        }
-                    }));
+                    create(cd, false);
                 }
             }
         } catch (Exception e) {
+            System.out.println(e);
         } finally {
-            if (futures != null) {
-                Thread shutdownThread = new Thread() {
-                    public void run() {
-                        try {
-                            for (Future<SolrCore> future : futures) {
-                                try {
-                                    future.get();
-                                } catch (InterruptedException e) {
-                                    Thread.currentThread().interrupt();
-                                } catch (ExecutionException e) {
-                                    log.error("Error waiting for SolrCore to be created", e);
-                                }
-                            }
-                        } finally {
-                            ExecutorUtil.shutdownAndAwaitTermination(coreLoadExecutor);
-                        }
-                    }
-                };
-                coreContainerWorkExecutor.submit(shutdownThread);
-            } else {
-                ExecutorUtil.shutdownAndAwaitTermination(coreLoadExecutor);
-            }
+
         }
     }
 
@@ -141,7 +98,7 @@ public class CoreContainer {
         SolrCore core = null;
         try {
             SolrIdentifierValidator.validateCoreName(dcore.getName());
-            core = new SolrCore(dcore, cfg, containerProperties);
+            core = new SolrCore(dcore, solrConfig);
             registerCore(dcore.getName(), core, publishState);
             return core;
         } catch (Exception e) {

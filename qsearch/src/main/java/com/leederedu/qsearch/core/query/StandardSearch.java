@@ -53,10 +53,13 @@ public class StandardSearch extends SearchBase {
     @Override
     public void handleBody() {
 
+        log.info("excute handleBody..");
     }
 
     @Override
     public boolean queryForList() {
+
+        log.info("queryForList..");
         return false;
     }
 

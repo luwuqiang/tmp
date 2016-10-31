@@ -69,7 +69,9 @@ public class SolrIndexWriter extends IndexWriter {
                     config, delPolicy, codec);
             w.setDirectoryFactory(directoryFactory);
             return w;
-        } finally {
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }finally {
             if (null == w && null != d) {
                 directoryFactory.doneWithDirectory(d);
                 directoryFactory.release(d);

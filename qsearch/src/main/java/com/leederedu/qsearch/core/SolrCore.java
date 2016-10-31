@@ -1,7 +1,6 @@
 package com.leederedu.qsearch.core;
 
 import com.leederedu.qsearch.core.cfg.IndexSchema;
-import com.leederedu.qsearch.core.cfg.NodeConfig;
 import com.leederedu.qsearch.core.cfg.SolrConfig;
 import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.core.query.StandardSearch;
@@ -10,7 +9,6 @@ import com.leederedu.qsearch.core.update.SolrCoreState;
 import com.leederedu.qsearch.core.update.SolrIndexWriter;
 import com.leederedu.qsearch.core.update.StandardUpdate;
 import com.leederedu.qsearch.handler.SearchHandler;
-import com.leederedu.qsearch.core.query.SearchBase;
 import com.leederedu.qsearch.handler.component.SearchComponent;
 import org.apache.lucene.analysis.util.ClasspathResourceLoader;
 import org.apache.lucene.analysis.util.ResourceLoader;
@@ -26,7 +24,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -47,9 +44,9 @@ public class SolrCore extends StandardHandler {
     private Codec codec;
     private final PluginBag<SearchComponent> searchComponents = new PluginBag<>(SearchComponent.class, this);
 
-    public SolrCore(CoreDescriptor dcore, NodeConfig cfg, Properties containerProperties) {
+    public SolrCore(CoreDescriptor dcore, SolrConfig solrConfig) {
         setName(dcore.getName());
-        this.solrConfig = null;
+        this.solrConfig = solrConfig;
 
         this.indexDeletionPolicy = this.initDeletionPolicy();
 
@@ -136,8 +133,9 @@ public class SolrCore extends StandardHandler {
             log.warn("Solr index directory '" + new File(indexDir) + "' doesn't exist."
                     + " Creating new index...");
 
-            SolrIndexWriter writer = SolrIndexWriter.create(this, "SolrCore.initIndex", indexDir, getDirectoryFactory(), true,
-                    getLatestSchema(), solrConfig.indexConfig, indexDeletionPolicy, codec);
+            SolrIndexWriter writer = SolrIndexWriter.create(this,
+                    "SolrCore.initIndex", indexDir, getDirectoryFactory(),
+                    true, getLatestSchema(), solrConfig.indexConfig, indexDeletionPolicy, codec);
             writer.close();
         }
     }

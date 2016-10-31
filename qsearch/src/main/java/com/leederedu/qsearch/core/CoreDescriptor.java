@@ -3,6 +3,7 @@ package com.leederedu.qsearch.core;
 
 import com.leederedu.qsearch.utils.PropertiesUtil;
 
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import java.nio.file.Path;
@@ -28,11 +29,11 @@ public class CoreDescriptor {
      * Create a new CoreDescriptor using the properties of an existing one
      *
      * @param coreName the new CoreDescriptor's name
-     * @param other    the CoreDescriptor to copy
+     * @param p    the CoreDescriptor to copy
      */
-    public CoreDescriptor(String coreName, CoreDescriptor other) {
-        this.instanceDir = other.instanceDir;
-        this.coreProperties.putAll(other.coreProperties);
+    public CoreDescriptor(String coreName, Properties p) {
+        this.instanceDir = Paths.get(p.getProperty("instanceDir", "/"));
+        this.coreProperties.putAll(p);
         this.coreProperties.setProperty(CORE_NAME, coreName);
     }
 

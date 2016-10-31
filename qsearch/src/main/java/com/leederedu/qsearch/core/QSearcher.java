@@ -1,12 +1,8 @@
 package com.leederedu.qsearch.core;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Properties;
-
-import com.leederedu.qsearch.core.cfg.NodeConfig;
-import com.leederedu.qsearch.core.cfg.QSearchResourceLoader;
+import com.leederedu.qsearch.core.cfg.SolrConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,19 +12,17 @@ import org.slf4j.LoggerFactory;
 public class QSearcher {
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private String qsearchConf = "qsearch.properties";
     protected volatile CoreContainer cores;
-    private String qSearchHome;
 
 
-    public void init() {
+    public void init() throws IOException {
         log.info("QSearcher.init(): {}", this.getClass().getClassLoader());
 
-        Properties extraProperties = null;
-        if (extraProperties == null)
-            extraProperties = new Properties();
+        SolrConfig solrConfig = new SolrConfig(this.getQsearchConf());
+        solrConfig.init();
 
-        this.cores = createCoreContainer(qSearchHome == null ?
-                QSearchResourceLoader.locateSolrHome() : Paths.get(qSearchHome), extraProperties);
+        this.cores = createCoreContainer(solrConfig);
     }
 
     public SolrCore getCore(IndexName indexName) {
@@ -40,18 +34,14 @@ public class QSearcher {
      *
      * @return a CoreContainer to hold this server's cores
      */
-    protected CoreContainer createCoreContainer(Path qsearchHome, Properties extraProperties) {
-        NodeConfig nodeConfig = loadNodeConfig(qsearchHome);
-        cores = new CoreContainer(nodeConfig, extraProperties, true);
+    protected CoreContainer createCoreContainer(SolrConfig solrConfig) {
+        cores = new CoreContainer(solrConfig, true);
         cores.load();
         return cores;
     }
 
-    private NodeConfig loadNodeConfig(Path qsearchHome) {
-        return null;
-    }
-
     public void destroy() {
+        log.info("QSearcher destroy.");
         if (cores != null) {
             try {
                 cores.shutdown();
@@ -63,5 +53,13 @@ public class QSearcher {
 
     public CoreContainer getCores() {
         return cores;
+    }
+
+    public String getQsearchConf() {
+        return qsearchConf;
+    }
+
+    public void setQsearchConf(String qsearchConf) {
+        this.qsearchConf = qsearchConf;
     }
 }
