@@ -17,7 +17,7 @@ public class QSearcherTest {
 
     @Test
     public void test() throws Exception {
-//        QSUtils.searchHandler().queryForList();
+        QSUtils.searchHandler().queryForList();
     }
 
     @Test

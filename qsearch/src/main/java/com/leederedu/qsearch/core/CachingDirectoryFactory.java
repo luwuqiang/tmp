@@ -41,4 +41,11 @@ public abstract class CachingDirectoryFactory extends DirectoryFactory {
             //todo
         }
     }
+
+    @Override
+    public Directory get(String path, DirContext dirContext, String rawLockType) throws IOException {
+        String fullPath = normalize(path);
+        Directory directory = create(fullPath, createLockFactory(rawLockType), dirContext);
+        return directory;
+    }
 }

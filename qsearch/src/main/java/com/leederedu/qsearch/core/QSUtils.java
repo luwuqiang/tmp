@@ -1,6 +1,5 @@
 package com.leederedu.qsearch.core;
 
-import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.handler.SearchHandler;
 import com.leederedu.qsearch.handler.UpdateHandler;
 
@@ -18,7 +17,7 @@ public class QSUtils {
     public static SearchHandler searchHandler(IndexName index) {
         SolrCore solrCore = qSearcher.getCore(index);
         if (solrCore == null) {
-            throw new RuntimeException("not found index name=" + index);
+            throw new RuntimeException("can not found index name=" + index.val());
         }
         return solrCore.getSearchHandler();
     }

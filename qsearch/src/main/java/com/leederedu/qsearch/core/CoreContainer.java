@@ -43,8 +43,9 @@ public class CoreContainer {
     public void load() {
         try {
             List<CoreDescriptor> cds = Lists.newArrayList();
-            cds.add(new CoreDescriptor("index", solrConfig.pro));
+            cds.add(new CoreDescriptor("index", this.solrConfig.pro));
             checkForDuplicateCoreNames(cds);
+            //xml配置加载
 
             for (final CoreDescriptor cd : cds) {
                 if (cd.isLoadOnStartup()) {
@@ -54,7 +55,6 @@ public class CoreContainer {
         } catch (Exception e) {
             System.out.println(e);
         } finally {
-
         }
     }
 
@@ -98,10 +98,12 @@ public class CoreContainer {
         SolrCore core = null;
         try {
             SolrIdentifierValidator.validateCoreName(dcore.getName());
+
             core = new SolrCore(dcore, solrConfig);
             registerCore(dcore.getName(), core, publishState);
             return core;
         } catch (Exception e) {
+            //todo
             throw e;
         } finally {
         }

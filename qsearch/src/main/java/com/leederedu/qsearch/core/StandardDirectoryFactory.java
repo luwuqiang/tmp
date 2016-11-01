@@ -19,10 +19,17 @@ package com.leederedu.qsearch.core;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.Locale;
 
+import com.leederedu.qsearch.core.common.SolrException;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.LockFactory;
 import org.apache.lucene.store.NRTCachingDirectory;
+import org.apache.lucene.store.NativeFSLockFactory;
+import org.apache.lucene.store.NoLockFactory;
+import org.apache.lucene.store.SimpleFSLockFactory;
+import org.apache.lucene.store.SingleInstanceLockFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +48,6 @@ public class StandardDirectoryFactory extends CachingDirectoryFactory {
         return true;
     }
 
-
     // special hack to work with NRTCachingDirectory
     private Directory getBaseDir(Directory dir) {
         Directory baseDir;
@@ -52,11 +58,6 @@ public class StandardDirectoryFactory extends CachingDirectoryFactory {
         }
 
         return baseDir;
-    }
-
-    @Override
-    public Directory get(String path, DirContext dirContext, String rawLockType) throws IOException {
-        return null;
     }
 
     @Override
@@ -81,5 +82,33 @@ public class StandardDirectoryFactory extends CachingDirectoryFactory {
         String cpath = new File(path).getCanonicalPath();
 
         return super.normalize(cpath);
+    }
+
+    @Override
+    protected LockFactory createLockFactory(String rawLockType) throws IOException {
+        if (null == rawLockType) {
+            rawLockType = DirectoryFactory.LOCK_TYPE_NATIVE;
+            log.warn("No lockType configured, assuming '" + rawLockType + "'.");
+        }
+        final String lockType = rawLockType.toLowerCase(Locale.ROOT).trim();
+        switch (lockType) {
+            case DirectoryFactory.LOCK_TYPE_SIMPLE:
+                return SimpleFSLockFactory.INSTANCE;
+            case DirectoryFactory.LOCK_TYPE_NATIVE:
+                return NativeFSLockFactory.INSTANCE;
+            case DirectoryFactory.LOCK_TYPE_SINGLE:
+                return new SingleInstanceLockFactory();
+            case DirectoryFactory.LOCK_TYPE_NONE:
+                return NoLockFactory.INSTANCE;
+            default:
+                throw new SolrException(SolrException.ErrorCode.SERVER_ERROR,
+                        "Unrecognized lockType: " + rawLockType);
+        }
+    }
+
+    @Override
+    protected Directory create(String path, LockFactory lockFactory, DirContext dirContext) throws IOException {
+        // we pass NoLockFactory, because the real lock factory is set later by injectLockFactory:
+        return FSDirectory.open(new File(path).toPath(), lockFactory);
     }
 }

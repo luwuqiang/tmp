@@ -1,6 +1,7 @@
 package com.leederedu.qsearch.core;
 
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.LockFactory;
 
 import java.io.IOException;
 
@@ -62,4 +63,18 @@ public abstract class DirectoryFactory {
     public String normalize(String path) throws IOException {
         return path;
     }
+
+    /**
+     * Creates a new LockFactory for a given path.
+     * @param rawLockType A string value as passed in config. Every factory should at least support 'none' to disable locking.
+     * @throws IOException If there is a low-level I/O error.
+     */
+    protected abstract LockFactory createLockFactory(String rawLockType) throws IOException;
+
+    /**
+     * Creates a new Directory for a given path.
+     *
+     * @throws IOException If there is a low-level I/O error.
+     */
+    protected abstract Directory create(String path, LockFactory lockFactory, DirContext dirContext) throws IOException;
 }

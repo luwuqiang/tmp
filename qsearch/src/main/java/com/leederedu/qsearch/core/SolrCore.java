@@ -47,13 +47,13 @@ public class SolrCore extends StandardHandler {
     public SolrCore(CoreDescriptor dcore, SolrConfig solrConfig) {
         setName(dcore.getName());
         this.solrConfig = solrConfig;
-
         this.indexDeletionPolicy = this.initDeletionPolicy();
-
         this.directoryFactory = new StandardDirectoryFactory();
         this.solrCoreState = new DefaultSolrCoreState(directoryFactory);
 
         try {
+            this.codec = initCodec(solrConfig);
+
             initIndex(true);
 //            initWriters();
             loadSearchComponents();
@@ -193,5 +193,16 @@ public class SolrCore extends StandardHandler {
      */
     public SearchComponent getSearchComponent(String name) {
         return searchComponents.get(name);
+    }
+
+    private Codec initCodec(SolrConfig solrConfig) {
+        final CodecFactory factory;
+        factory = new CodecFactory() {
+            @Override
+            public Codec getCodec() {
+                return Codec.getDefault();
+            }
+        };
+        return factory.getCodec();
     }
 }

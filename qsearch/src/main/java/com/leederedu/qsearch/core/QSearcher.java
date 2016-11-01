@@ -15,7 +15,6 @@ public class QSearcher {
     private String qsearchConf = "qsearch.properties";
     protected volatile CoreContainer cores;
 
-
     public void init() throws IOException {
         log.info("QSearcher.init(): {}", this.getClass().getClassLoader());
 
@@ -26,7 +25,7 @@ public class QSearcher {
     }
 
     public SolrCore getCore(IndexName indexName) {
-        return this.getCores().getCore(indexName.name());
+        return this.getCores().getCore(indexName.val());
     }
 
     /**
