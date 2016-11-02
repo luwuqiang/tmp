@@ -20,7 +20,7 @@ public class SolrIndexConfig {
     }
 
     public IndexWriterConfig toIndexWriterConfig(SolrCore core) {
-        IndexSchema schema = core.getLatestSchema();
+//        IndexSchema schema = core.getLatestSchema();
         System.out.println("--begin2----");
         IndexWriterConfig iwconf =null;
         try {

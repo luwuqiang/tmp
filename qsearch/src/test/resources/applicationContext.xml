@@ -8,7 +8,14 @@
 
     <bean id="qSearcher" class="com.leederedu.qsearch.core.QSearcher"
           init-method="init"
-          destroy-method="destroy"/>
+          destroy-method="destroy">
+        <property name="indexList">
+            <list>
+                <bean class="com.leederedu.qsearch.core.CoreDescriptor"
+                      init-method="init" p:name="index" p:instanceDir="index/"/>
+            </list>
+        </property>
+    </bean>
 
     <bean class="com.leederedu.qsearch.core.QSUtils"
           p:qSearcher-ref="qSearcher"/>

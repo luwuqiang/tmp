@@ -2,6 +2,9 @@ package com.leederedu.qsearch.core;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+
+import com.leederedu.qsearch.core.cfg.IndexDescriptor;
 import com.leederedu.qsearch.core.cfg.SolrConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +17,7 @@ public class QSearcher {
 
     private String qsearchConf = "qsearch.properties";
     protected volatile CoreContainer cores;
+    private List<IndexDescriptor> indexList;
 
     public void init() throws IOException {
         log.info("QSearcher.init(): {}", this.getClass().getClassLoader());
@@ -34,7 +38,7 @@ public class QSearcher {
      * @return a CoreContainer to hold this server's cores
      */
     protected CoreContainer createCoreContainer(SolrConfig solrConfig) {
-        cores = new CoreContainer(solrConfig, true);
+        cores = new CoreContainer(indexList,solrConfig, true);
         cores.load();
         return cores;
     }
@@ -60,5 +64,13 @@ public class QSearcher {
 
     public void setQsearchConf(String qsearchConf) {
         this.qsearchConf = qsearchConf;
+    }
+
+    public void setIndexList(List<IndexDescriptor> indexList) {
+        this.indexList = indexList;
+    }
+
+    public List<IndexDescriptor> getIndexList() {
+        return indexList;
     }
 }

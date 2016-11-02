@@ -21,8 +21,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.concurrent.atomic.AtomicLong;
 
 import com.leederedu.qsearch.core.DirectoryFactory;
+import com.leederedu.qsearch.core.IndexSchema;
 import com.leederedu.qsearch.core.SolrCore;
-import com.leederedu.qsearch.core.cfg.IndexSchema;
 import com.leederedu.qsearch.core.cfg.SolrIndexConfig;
 import com.leederedu.qsearch.utils.IOUtils;
 import org.apache.lucene.codecs.Codec;
@@ -30,7 +30,6 @@ import org.apache.lucene.index.IndexDeletionPolicy;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.InfoStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -101,7 +100,7 @@ public class SolrIndexWriter extends IndexWriter {
     /**
      * use DocumentBuilder now...
      * private final void addField(Document doc, String name, String val) {
-     * SchemaField ftype = schema.getField(name);
+     * Field ftype = schema.getField(name);
      * <p/>
      * // we don't check for a null val ourselves because a solr.FieldType
      * // might actually want to map it to something.  If createField()

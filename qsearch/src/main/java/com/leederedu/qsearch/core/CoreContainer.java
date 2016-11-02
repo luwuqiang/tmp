@@ -1,7 +1,7 @@
 package com.leederedu.qsearch.core;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.leederedu.qsearch.core.cfg.IndexDescriptor;
 import com.leederedu.qsearch.core.cfg.SolrConfig;
 import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.utils.DefaultSolrThreadFactory;
@@ -13,13 +13,9 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.Locale;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -35,22 +31,24 @@ public class CoreContainer {
     private boolean shutDown;
     private final SolrConfig solrConfig;
     final QSearchCores solrCores = new QSearchCores(this);
+    private final List<IndexDescriptor> indexList;
 
-    public CoreContainer(SolrConfig solrConfig, boolean asyncCoreLoad) {
+    public CoreContainer(List<IndexDescriptor> indexList, SolrConfig solrConfig, boolean asyncCoreLoad) {
+        this.indexList = indexList;
         this.solrConfig = checkNotNull(solrConfig);
     }
 
+
     public void load() {
         try {
-            List<CoreDescriptor> cds = Lists.newArrayList();
-            cds.add(new CoreDescriptor("index", this.solrConfig.pro));
-            checkForDuplicateCoreNames(cds);
-            //xml配置加载
+            if (indexList == null || indexList.isEmpty()) {
+                throw new RuntimeException("can not found index");
+            }
 
-            for (final CoreDescriptor cd : cds) {
-                if (cd.isLoadOnStartup()) {
-                    create(cd, false);
-                }
+            checkForDuplicateCoreNames(indexList);
+            //配置加载
+            for (final IndexDescriptor dcore : indexList) {
+                create(dcore, false);
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -74,9 +72,9 @@ public class CoreContainer {
         return shutDown;
     }
 
-    private static void checkForDuplicateCoreNames(List<CoreDescriptor> cds) {
+    private static void checkForDuplicateCoreNames(List<IndexDescriptor> cds) {
         Map<String, Path> addedCores = Maps.newHashMap();
-        for (CoreDescriptor cd : cds) {
+        for (IndexDescriptor cd : cds) {
             final String name = cd.getName();
             if (addedCores.containsKey(name))
                 throw new SolrException(SolrException.ErrorCode.SERVER_ERROR,
@@ -93,7 +91,7 @@ public class CoreContainer {
      * @param publishState publish core state to the cluster if true
      * @return the newly created core
      */
-    private SolrCore create(CoreDescriptor dcore, boolean publishState) {
+    private SolrCore create(IndexDescriptor dcore, boolean publishState) {
 
         SolrCore core = null;
         try {

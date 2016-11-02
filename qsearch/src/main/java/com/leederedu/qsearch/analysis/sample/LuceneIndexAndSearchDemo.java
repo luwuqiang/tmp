@@ -88,6 +88,7 @@ public class LuceneIndexAndSearchDemo {
       Document doc = new Document();
       doc.add(new StringField("ID", "10000", Field.Store.YES));
       doc.add(new TextField(fieldName, text, Field.Store.YES));
+      doc.add(new Field(null,null,null,null));
       iwriter.addDocument(doc);
       iwriter.close();
 

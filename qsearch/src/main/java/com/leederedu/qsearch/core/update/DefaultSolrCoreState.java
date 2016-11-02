@@ -176,7 +176,7 @@ public final class DefaultSolrCoreState extends SolrCoreState {
         }
 
         if (openNewWriter) {
-            indexWriter = createMainIndexWriter(core, "DirectUpdateHandler2");
+            indexWriter = createMainIndexWriter(core, "DirectUpdateHandler");
             log.info("New IndexWriter is ready to be used.");
         }
     }

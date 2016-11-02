@@ -6,4 +6,6 @@ package com.leederedu.qsearch.handler;
 public interface UpdateHandler {
 
     public boolean deleteAll();
+
+//    public void addDoc();
 }

@@ -1,6 +1,6 @@
 package com.leederedu.qsearch.core;
 
-import com.leederedu.qsearch.core.cfg.IndexSchema;
+import com.leederedu.qsearch.core.cfg.IndexDescriptor;
 import com.leederedu.qsearch.core.cfg.SolrConfig;
 import com.leederedu.qsearch.core.common.SolrException;
 import com.leederedu.qsearch.core.query.StandardSearch;
@@ -44,7 +44,7 @@ public class SolrCore extends StandardHandler {
     private Codec codec;
     private final PluginBag<SearchComponent> searchComponents = new PluginBag<>(SearchComponent.class, this);
 
-    public SolrCore(CoreDescriptor dcore, SolrConfig solrConfig) {
+    public SolrCore(IndexDescriptor dcore, SolrConfig solrConfig) {
         setName(dcore.getName());
         this.solrConfig = solrConfig;
         this.indexDeletionPolicy = this.initDeletionPolicy();
@@ -175,7 +175,7 @@ public class SolrCore extends StandardHandler {
     @Override
     public void initHandler() {
         super.setSearchHandler(new StandardSearch());
-        super.setUpdateHandler(new StandardUpdate());
+        super.setUpdateHandler(new StandardUpdate(this, solrCoreState));
     }
 
     // this core current usage count

@@ -29,11 +29,14 @@ public class SolrConfig {
         this.coreLoadThreadCount = NumberUtils.toInt(this.pro.get("coreLoadThreadCount"), 3);
     }
 
-    private Properties loadProperties(String properties) throws IOException {
-        InputStream is = this.getClass()
-                .getClassLoader().getResourceAsStream(properties);
+    private Properties loadProperties(String properties) {
         Properties p = new Properties();
-        p.load(is);
+        try {
+            InputStream is = this.getClass()
+                    .getClassLoader().getResourceAsStream(properties);
+            p.load(is);
+        } catch (Exception e) {
+        }
         return p;
     }
 

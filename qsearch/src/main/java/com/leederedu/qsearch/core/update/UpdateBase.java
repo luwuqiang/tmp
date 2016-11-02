@@ -9,6 +9,11 @@ import com.leederedu.qsearch.handler.UpdateHandler;
  */
 public abstract class UpdateBase extends DirectUpdateHandler implements UpdateHandler {
 
+
+    public UpdateBase(SolrCore solrCore, SolrCoreState solrCoreState) {
+        super(solrCore, solrCoreState);
+    }
+
     public abstract void init();
 
     public abstract void inform(SolrCore core);

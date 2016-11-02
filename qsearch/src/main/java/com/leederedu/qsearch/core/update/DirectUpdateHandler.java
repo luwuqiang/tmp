@@ -2,6 +2,7 @@ package com.leederedu.qsearch.core.update;
 
 import com.leederedu.qsearch.core.QSearchCommand;
 import com.leederedu.qsearch.core.SchemaField;
+import com.leederedu.qsearch.core.SolrCore;
 import com.leederedu.qsearch.utils.RefCounted;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -17,7 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * Created by liuwuqiang on 2016/11/1.
  */
 public class DirectUpdateHandler {
-
+    protected final SolrCoreState solrCoreState;
+    private final SolrCore core;
     // stats
     AtomicLong addCommands = new AtomicLong();
     AtomicLong addCommandsCumulative = new AtomicLong();
@@ -33,6 +35,11 @@ public class DirectUpdateHandler {
     AtomicLong numDocsPending = new AtomicLong();
     AtomicLong numErrors = new AtomicLong();
     AtomicLong numErrorsCumulative = new AtomicLong();
+
+    public DirectUpdateHandler(SolrCore core, SolrCoreState solrCoreState) {
+        this.core = core;
+        this.solrCoreState = solrCoreState;
+    }
 
     public int addDoc(QSearchCommand cmd) throws IOException {
         try {
@@ -67,6 +74,7 @@ public class DirectUpdateHandler {
     }
 
     private void doNormalUpdate(QSearchCommand cmd) throws IOException {
+        System.out.println("doNormalUpdate...");
         Term updateTerm;
         // TODO: 2016/11/1
         Term idTerm = new Term(SchemaField.uniqueKeyFieldName, cmd.getIndexedId());
@@ -81,23 +89,23 @@ public class DirectUpdateHandler {
 
         RefCounted<IndexWriter> iw = solrCoreState.getIndexWriter(core);
         try {
-            IndexWriter writer = iw.get();
-            if (cmd.isBlock()) {
-                writer.updateDocuments(updateTerm, cmd);
-            } else {
-                Document luceneDocument = cmd.getLuceneDocument();
-                // SolrCore.verbose("updateDocument",updateTerm,luceneDocument,writer);
-                writer.updateDocument(updateTerm, luceneDocument);
-            }
-            // SolrCore.verbose("updateDocument",updateTerm,"DONE");
-
-            if (del) { // ensure id remains unique
-                BooleanQuery.Builder bq = new BooleanQuery.Builder();
-                bq.add(new BooleanClause(new TermQuery(updateTerm),
-                        BooleanClause.Occur.MUST_NOT));
-                bq.add(new BooleanClause(new TermQuery(idTerm), BooleanClause.Occur.MUST));
-                writer.deleteDocuments(new DeleteByQueryWrapper(bq.build(), core.getLatestSchema()));
-            }
+//            IndexWriter writer = iw.get();
+//            if (cmd.isBlock()) {
+//                writer.updateDocuments(updateTerm, cmd);
+//            } else {
+//                Document luceneDocument = cmd.getLuceneDocument();
+//                // SolrCore.verbose("updateDocument",updateTerm,luceneDocument,writer);
+//                writer.updateDocument(updateTerm, luceneDocument);
+//            }
+//            // SolrCore.verbose("updateDocument",updateTerm,"DONE");
+//
+//            if (del) { // ensure id remains unique
+//                BooleanQuery.Builder bq = new BooleanQuery.Builder();
+//                bq.add(new BooleanClause(new TermQuery(updateTerm),
+//                        BooleanClause.Occur.MUST_NOT));
+//                bq.add(new BooleanClause(new TermQuery(idTerm), BooleanClause.Occur.MUST));
+//                writer.deleteDocuments(new DeleteByQueryWrapper(bq.build(), core.getLatestSchema()));
+//            }
 
         } finally {
             iw.decref();
