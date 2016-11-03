@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  */
 @Target(value = {ElementType.FIELD, ElementType.TYPE})
 @Retention(value = RetentionPolicy.RUNTIME)
-public @interface Field {
+public @interface IndexField {
 
     boolean request() default false;
 

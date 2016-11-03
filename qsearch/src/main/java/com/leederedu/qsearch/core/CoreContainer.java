@@ -66,6 +66,22 @@ public class CoreContainer {
     }
 
     public void shutdown() {
+        try {
+            // First wake up the closer thread, it'll terminate almost immediately since it checks isShutDown.
+            synchronized (solrCores.getModifyLock()) {
+                solrCores.getModifyLock().notifyAll(); // wake up anyone waiting
+            }
+            // Now clear all the cores that are being operated upon.
+            solrCores.close();
+
+            // It's still possible that one of the pending dynamic load operation is waiting, so wake it up if so.
+            // Since all the pending operations queues have been drained, there should be nothing to do.
+            synchronized (solrCores.getModifyLock()) {
+                solrCores.getModifyLock().notifyAll(); // wake up the thread
+            }
+        } catch (Exception ex) {
+
+        }
     }
 
     public boolean isShutDown() {

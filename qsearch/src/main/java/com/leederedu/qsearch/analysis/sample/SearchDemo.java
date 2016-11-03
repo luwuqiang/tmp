@@ -25,8 +25,9 @@
  */
 package com.leederedu.qsearch.analysis.sample;
 
-import java.io.IOException;
-
+import com.leederedu.qsearch.analysis.lucene.IKAnalyzer;
+import com.leederedu.qsearch.core.DirectoryFactory;
+import com.leederedu.qsearch.core.StandardDirectoryFactory;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -45,9 +46,13 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.LockObtainFailedException;
+import org.apache.lucene.store.NativeFSLockFactory;
 import org.apache.lucene.store.RAMDirectory;
-import com.leederedu.qsearch.analysis.lucene.IKAnalyzer;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 使用IKAnalyzer进行Lucene索引和查询的演示
@@ -56,7 +61,7 @@ import com.leederedu.qsearch.analysis.lucene.IKAnalyzer;
  * 以下是结合Lucene4.0 API的写法
  *
  */
-public class LuceneIndexAndSearchDemo {
+public class SearchDemo {
 
   /**
    * 模拟：
@@ -65,7 +70,7 @@ public class LuceneIndexAndSearchDemo {
    */
   public static void main(String[] args) {
     // Lucene Document的域名
-    String fieldName = "text";
+    String fieldName = "title";
     // 检索内容
     String text = "IK Analyzer是一个结合词典分词和文法分词的中文分词开源工具包。它使用了全新的正向迭代最细粒度切分算法。";
 
@@ -78,18 +83,20 @@ public class LuceneIndexAndSearchDemo {
     IndexSearcher isearcher = null;
     try {
       // 建立内存索引对象
-      directory = new RAMDirectory();
+      directory = FSDirectory.open(new File("index/").toPath(), NativeFSLockFactory.INSTANCE);
 
-      // 配置IndexWriterConfig
-      IndexWriterConfig iwConfig = new IndexWriterConfig(analyzer);
-      iwConfig.setOpenMode(OpenMode.CREATE_OR_APPEND);
-      iwriter = new IndexWriter(directory, iwConfig);
-      // 写入索引
-      Document doc = new Document();
-      doc.add(new StringField("ID", "10000", Field.Store.YES));
-      doc.add(new TextField(fieldName, text, Field.Store.YES));
-      iwriter.addDocument(doc);
-      iwriter.close();
+
+//      // 配置IndexWriterConfig
+//      IndexWriterConfig iwConfig = new IndexWriterConfig(analyzer);
+//      iwConfig.setOpenMode(OpenMode.CREATE_OR_APPEND);
+//      iwriter = new IndexWriter(directory, iwConfig);
+//      // 写入索引
+//      Document doc = new Document();
+//      doc.add(new StringField("ID", "10000", Field.Store.YES));
+//      doc.add(new TextField(fieldName, text, Field.Store.YES));
+//      iwriter.addDocument(doc);
+//      iwriter.close();
+
 
       // 搜索过程**********************************
       // 实例化搜索器

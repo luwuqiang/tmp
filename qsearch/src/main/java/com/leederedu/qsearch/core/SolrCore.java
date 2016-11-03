@@ -10,14 +10,17 @@ import com.leederedu.qsearch.core.update.SolrIndexWriter;
 import com.leederedu.qsearch.core.update.StandardUpdate;
 import com.leederedu.qsearch.handler.SearchHandler;
 import com.leederedu.qsearch.handler.component.SearchComponent;
+import com.leederedu.qsearch.utils.RefCounted;
 import org.apache.lucene.analysis.util.ClasspathResourceLoader;
 import org.apache.lucene.analysis.util.ResourceLoader;
 import org.apache.lucene.codecs.Codec;
 import org.apache.lucene.index.IndexDeletionPolicy;
+import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.KeepOnlyLastCommitDeletionPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
@@ -30,7 +33,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Created by liuwuqiang on 2016/10/24.
  */
-public class SolrCore extends StandardHandler {
+public class SolrCore extends StandardHandler implements Closeable {
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private String name;
@@ -39,7 +42,6 @@ public class SolrCore extends StandardHandler {
     private final SolrConfig solrConfig;
     private final SolrCoreState solrCoreState;
     private final IndexDeletionPolicy indexDeletionPolicy;
-    private IndexDeletionPolicy deletionPolicy;
     private IndexReaderFactory indexReaderFactory;
     private Codec codec;
     private final PluginBag<SearchComponent> searchComponents = new PluginBag<>(SearchComponent.class, this);
@@ -105,7 +107,7 @@ public class SolrCore extends StandardHandler {
     }
 
     public IndexDeletionPolicy getDeletionPolicy() {
-        return deletionPolicy;
+        return this.indexDeletionPolicy;
     }
 
     public Codec getCodec() {
@@ -204,5 +206,28 @@ public class SolrCore extends StandardHandler {
             }
         };
         return factory.getCodec();
+    }
+
+
+    @Override
+    public void close() {
+        int count = refCount.decrementAndGet();
+        if (count > 0) {
+            try {
+                Thread.currentThread().sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        log.info(" CLOSING SolrCore " + this);
+
+        try {
+            RefCounted<IndexWriter> iw = solrCoreState.getIndexWriter(this);
+            IndexWriter indexWriter = iw.get();
+            indexWriter.commit();
+            indexWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

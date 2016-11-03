@@ -1,13 +1,19 @@
 package com.leederedu.qsearch.core;
 
+import com.leederedu.qsearch.core.common.SolrException;
+import com.leederedu.qsearch.utils.DefaultSolrThreadFactory;
+import com.leederedu.qsearch.utils.ExecutorUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
 
 /**
  * Created by liuwuqiang on 2016/10/24.
@@ -23,6 +29,10 @@ public class QSearchCores {
 
     QSearchCores(CoreContainer coreContainer) {
         this.container = coreContainer;
+    }
+
+    protected Object getModifyLock() {
+        return modifyLock;
     }
 
 
@@ -43,5 +53,41 @@ public class QSearchCores {
 
             return core;
         }
+    }
+
+    protected void close() {
+        Collection<SolrCore> coreList = new ArrayList<>();
+
+        do {
+            coreList.clear();
+            synchronized (modifyLock) {
+                coreList.addAll(cores.values());
+                cores.clear();
+            }
+            ExecutorService coreCloseExecutor = ExecutorUtil.newMDCAwareFixedThreadPool(Integer.MAX_VALUE,
+                    new DefaultSolrThreadFactory("coreCloseExecutor"));
+            try {
+                for (final SolrCore core : coreList) {
+                    coreCloseExecutor.submit(new Callable<SolrCore>() {
+                        @Override
+                        public SolrCore call() throws Exception {
+                            try {
+                                core.close();
+                            } catch (Throwable e) {
+                                SolrException.log(log, "Error shutting down core", e);
+                                if (e instanceof Error) {
+                                    throw (Error) e;
+                                }
+                            } finally {
+                            }
+                            return core;
+                        }
+                    });
+                }
+            } finally {
+                ExecutorUtil.shutdownAndAwaitTermination(coreCloseExecutor);
+            }
+
+        } while (coreList.size() > 0);
     }
 }

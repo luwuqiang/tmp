@@ -38,7 +38,7 @@ public class QSearcher {
      * @return a CoreContainer to hold this server's cores
      */
     protected CoreContainer createCoreContainer(SolrConfig solrConfig) {
-        cores = new CoreContainer(indexList,solrConfig, true);
+        cores = new CoreContainer(indexList, solrConfig, true);
         cores.load();
         return cores;
     }

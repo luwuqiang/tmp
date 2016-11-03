@@ -100,13 +100,13 @@ public class SolrIndexWriter extends IndexWriter {
     /**
      * use DocumentBuilder now...
      * private final void addField(Document doc, String name, String val) {
-     * Field ftype = schema.getField(name);
+     * IndexField ftype = schema.getField(name);
      * <p/>
-     * // we don't check for a null val ourselves because a solr.FieldType
+     * // we don't check for a null val ourselves because a solr.QSFieldType
      * // might actually want to map it to something.  If createField()
      * // returns null, then we don't store the field.
      * <p/>
-     * Field field = ftype.createField(val, boost);
+     * IndexField field = ftype.createField(val, boost);
      * if (field != null) doc.add(field);
      * }
      * <p/>

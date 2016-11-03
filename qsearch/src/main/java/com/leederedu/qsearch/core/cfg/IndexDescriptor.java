@@ -35,7 +35,7 @@ public abstract class IndexDescriptor {
     }
 
     public void setiSchema(Class<?> type) {
-        if (type == null || !type.isAssignableFrom(ISchema.class)) {
+        if (type == null || !ISchema.class.isAssignableFrom(type)) {
             throw new RuntimeException("fail to set [setiSchema(Class<?> type)]");
         }
         this.iSchema = type;

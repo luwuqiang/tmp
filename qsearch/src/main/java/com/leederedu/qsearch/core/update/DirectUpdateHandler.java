@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class DirectUpdateHandler {
     protected final SolrCoreState solrCoreState;
-    private final SolrCore core;
+    protected final SolrCore core;
     // stats
     AtomicLong addCommands = new AtomicLong();
     AtomicLong addCommandsCumulative = new AtomicLong();

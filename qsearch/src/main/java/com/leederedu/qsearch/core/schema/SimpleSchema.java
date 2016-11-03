@@ -3,25 +3,16 @@ package com.leederedu.qsearch.core.schema;
 /**
  * Created by liuwuqiang on 2016/11/2.
  */
-public class SimpleSchema implements ISchema{
+public class SimpleSchema implements ISchema {
 
     @Id
     private long id;
 
-    @Field(request = true, stored = true)
+    @IndexField(request = true, stored = true)
     private String title;
 
-    @Field(request = false)
-    private int sortNum;
-
-    public int getSortNum() {
-        return sortNum;
-    }
-
-    public SimpleSchema setSortNum(int sortNum) {
-        this.sortNum = sortNum;
-        return this;
-    }
+    @IndexField(request = false)
+    private float boost = 1.0f;
 
     public long getId() {
         return id;
@@ -38,6 +29,15 @@ public class SimpleSchema implements ISchema{
 
     public SimpleSchema setTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public float getBoost() {
+        return boost;
+    }
+
+    public SimpleSchema setBoost(float boost) {
+        this.boost = boost;
         return this;
     }
 }
