@@ -1,6 +1,6 @@
-﻿CREATE TABLE `t_meeting_info` (
+CREATE TABLE `t_meeting_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `company_code` varchar(32) DEFAULT NULL COMMENT '学校/机构代码 外键关联：t_acct_enterprise_info',
+  `enterprise_id` bigint(20) DEFAULT NULL COMMENT '学校/机构ID 外键关联：t_acct_enterprise_info',
   `orgl_id` bigint(20) DEFAULT NULL COMMENT '学校下机构外键关联t_sys_schoolOrg',
   `title` varchar(255) DEFAULT NULL COMMENT '会议标题',
   `del` tinyint(4) DEFAULT '0' COMMENT '是否删除（0：否，1：是）',
@@ -22,7 +22,7 @@
 
 
 CREATE TABLE `t_meeting_photo` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `meeting_id` bigint(20) NOT NULL COMMENT '会议信息ID ',
   `url` varchar(255) DEFAULT NULL COMMENT '大图',
   `thumbnail_url` varchar(255) DEFAULT NULL COMMENT '缩略图',
@@ -33,7 +33,7 @@ CREATE TABLE `t_meeting_photo` (
 
 
 CREATE TABLE `t_meeting_ personal_info` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cust_id` bigint(20) NOT NULL COMMENT '客户号',
   `meeting_id` bigint(20) NOT NULL COMMENT '会议信息ID',
   `sing` tinyint(4) DEFAULT '0' COMMENT '签到（0：否，1：是）',
