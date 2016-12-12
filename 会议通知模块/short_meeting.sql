@@ -40,6 +40,7 @@ CREATE TABLE `t_meeting_ personal_info` (
   `sign_address` varchar(255) DEFAULT NULL COMMENT '签到地址',
   `sign_out` tinyint(4) DEFAULT '0' COMMENT '签退（0：否，1：是）',
   `signout_time` bigint(20) DEFAULT NULL COMMENT '签退时间',
+  `signout_address` varchar(255) DEFAULT NULL COMMENT '签退地址',
   `del` tinyint(4) DEFAULT '0' COMMENT '是否删除（0：否，1：是）',
   `create_time` bigint(20) DEFAULT NULL,
   `modify_time` bigint(20) DEFAULT NULL,
