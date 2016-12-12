@@ -35,7 +35,7 @@ CREATE TABLE `t_meeting_ personal_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cust_id` bigint(20) NOT NULL COMMENT '客户号',
   `meeting_id` bigint(20) NOT NULL COMMENT '会议信息ID',
-  `sing` tinyint(4) DEFAULT '0' COMMENT '签到（0：否，1：是）',
+  `sign` tinyint(4) DEFAULT '0' COMMENT '签到（0：否，1：是）',
   `sign_time` bigint(20) DEFAULT '0' COMMENT '签到时间',
   `sign_address` varchar(255) DEFAULT NULL COMMENT '签到地址',
   `sign_out` tinyint(4) DEFAULT '0' COMMENT '签退（0：否，1：是）',
