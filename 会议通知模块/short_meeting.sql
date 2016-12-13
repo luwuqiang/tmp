@@ -7,7 +7,7 @@ CREATE TABLE `t_meeting_info` (
   `begin_time` bigint(20) DEFAULT NULL COMMENT '会议开始时间',
   `take_time` int(11) DEFAULT NULL COMMENT '会议时长(分钟)',
   `content` varchar(1000) DEFAULT NULL COMMENT '会议内容',
-  `meeting_address` varchar(255) DEFAULT NULL COMMENT '会议地点',
+  `location_id` bigint(20) NOT NULL COMMENT '会议地点Id',
   `sign_amount` int(11) DEFAULT '0' COMMENT '签到人数',
   `signout_amount` int(11) DEFAULT '0' COMMENT '签退人数',
   `del` tinyint(4) DEFAULT '0' COMMENT '是否删除（0：否，1：是）',
@@ -17,7 +17,7 @@ CREATE TABLE `t_meeting_info` (
   `create_user` bigint(20) DEFAULT NULL,
   `modify_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会议通知模块';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会议通知模块';
 
 
 CREATE TABLE `t_meeting_photo` (
@@ -27,11 +27,12 @@ CREATE TABLE `t_meeting_photo` (
   `thumbnail_url` varchar(255) DEFAULT NULL COMMENT '缩略图',
   `create_time` bigint(20) DEFAULT '0',
   `modify_time` bigint(20) DEFAULT '0',
+  `sort_num` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会议图片表';
 
 
-CREATE TABLE `t_meeting_ personal_info` (
+CREATE TABLE `t_meeting_personal_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cust_id` bigint(20) NOT NULL COMMENT '客户号',
   `meeting_id` bigint(20) NOT NULL COMMENT '会议信息ID',
@@ -45,4 +46,4 @@ CREATE TABLE `t_meeting_ personal_info` (
   `create_time` bigint(20) DEFAULT NULL,
   `modify_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会议个人信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='会议个人信息表';
