@@ -20,7 +20,7 @@ CREATE TABLE `t_meeting_info` (
   `create_user` bigint(20) DEFAULT NULL,
   `modify_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COMMENT='会议通知模块';
+) ENGINE=InnoDB AUTO_INCREMENT=15010000000000 DEFAULT CHARSET=utf8 COMMENT='会议通知模块';
 
 CREATE TABLE `t_meeting_personal_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -37,3 +37,6 @@ CREATE TABLE `t_meeting_personal_info` (
   `modify_time` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='会议个人信息表';
+
+INSERT INTO `t_sys_prefix_sno` (`lastno`, `note_id`, `opertype`, `prefix`) VALUES (15010000000000, 1, 1, 15);
+
