@@ -35,8 +35,9 @@ CREATE TABLE `t_meeting_personal_info` (
   `del` tinyint(4) DEFAULT '0' COMMENT '是否删除（0：否，1：是）',
   `create_time` bigint(20) DEFAULT NULL,
   `modify_time` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='会议个人信息表';
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQUE_MEETING_PERSONAL_INFO` (`cust_id`,`meeting_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='会议个人信息表';
 
 INSERT INTO `t_sys_prefix_sno` (`lastno`, `note_id`, `opertype`, `prefix`) VALUES (15010000000000, 1, 1, 15);
 
