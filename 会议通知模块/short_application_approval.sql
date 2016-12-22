@@ -26,8 +26,10 @@ CREATE TABLE `t_mo_application_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mold` tinyint(4) NOT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
   `name` varchar(50) DEFAULT NULL COMMENT '申请类型名称',
+  `seq` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='申请类型';
+
 
 
 CREATE TABLE `t_mo_approval` (
@@ -49,3 +51,13 @@ CREATE TABLE `t_mo_approval_step_mold` (
   `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批流程模型表';
+
+
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (1,1,'事假',1);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (2,1,'病假',2);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (3,1,'年假',3);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (4,1,'调休',4);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (5,1,'婚假',5);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (6,1,'产假',6);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (7,1,'陪产假',7);
+INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (8,1,'其他',8);
