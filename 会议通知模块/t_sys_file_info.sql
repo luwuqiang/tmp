@@ -51,3 +51,5 @@ INSERT INTO `t_sys_file_info` (`add_time`,`node_id`,`obj_id`,`photokey`,`type`,`
  VALUES (20161216145600,1,15010000000004,'https://img11.360buyimg.com/n2/jfs/t3643/47/2194531012/64734/267b2f05/58462c7bN2de7ca4a.jpg',2,NULL,'https://img11.360buyimg.com/n2/jfs/t3643/47/2194531012/64734/267b2f05/58462c7bN2de7ca4a.jpg',NULL,'jpf');
 INSERT INTO `t_sys_file_info` (`add_time`,`node_id`,`obj_id`,`photokey`,`type`,`file_type`,`file_url`,`file_name`,`file_pxf`)
  VALUES (20161216145600,1,15010000000004,'https://img11.360buyimg.com/n2/jfs/t3136/159/4260913001/36394/dfecbc6d/583e9638N552af568.jpg',2,NULL,'https://img11.360buyimg.com/n2/jfs/t3136/159/4260913001/36394/dfecbc6d/583e9638N552af568.jpg',NULL,'jpf');
+
+INSERT INTO `t_sys_schoolorg` (`id`,`orgmodel_id`,`full_name`,`short_name`) VALUES (112,7,'测试部门','测试部');
