@@ -7,10 +7,10 @@ CREATE TABLE `t_mo_application` (
   `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
   `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间',
-  `status` tinyint(4) DEFAULT '0' COMMENT '审批状态，0:待审批 1:不同意 2:已同意',
+  `status` tinyint(4) DEFAULT '0' COMMENT '审批状态，0:待审批 1:审批中 2:不同意 3:已同意',
+  `photo_group_id` bigint(20) DEFAULT '0' COMMENT '图组id,关联t_sys_file_info的obj_id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17010000000000 DEFAULT CHARSET=utf8 COMMENT='移动办公申请表';
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='移动办公申请表';
 
 CREATE TABLE `t_mo_application_leave` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -19,8 +19,7 @@ CREATE TABLE `t_mo_application_leave` (
   `begin_time` bigint(20) DEFAULT NULL COMMENT '开始时间',
   `end_time` bigint(20) DEFAULT NULL COMMENT '结束时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='请假申请表';
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='请假申请表';
 
 CREATE TABLE `t_mo_application_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -28,9 +27,7 @@ CREATE TABLE `t_mo_application_type` (
   `name` varchar(50) DEFAULT NULL COMMENT '申请类型名称',
   `seq` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='申请类型';
-
-
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='申请类型';
 
 CREATE TABLE `t_mo_approval` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -38,6 +35,9 @@ CREATE TABLE `t_mo_approval` (
   `step` tinyint(4) DEFAULT '1' COMMENT '使用1.2.3 ...来标记流程',
   `cust_id` bigint(20) NOT NULL COMMENT '审核人',
   `applic_id` bigint(20) NOT NULL COMMENT '关联t_mo_application',
+  `status` tinyint(4) DEFAULT '0' COMMENT '用户审批结果 0:待审核 1:不同意 2:同意',
+  `approval_time` bigint(20) DEFAULT NULL COMMENT '审核时间',
+  `disagree_reason` varchar(300) DEFAULT NULL COMMENT '理由',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批表';
 
@@ -50,7 +50,7 @@ CREATE TABLE `t_mo_approval_step_mold` (
   `show_seq` tinyint(4) DEFAULT NULL COMMENT '显示顺序',
   `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批流程模型表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='审批流程模型表';
 
 
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (1,1,'事假',1);
