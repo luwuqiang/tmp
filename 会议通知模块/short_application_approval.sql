@@ -61,3 +61,13 @@ INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (5,1,'婚假
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (6,1,'产假',6);
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (7,1,'陪产假',7);
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (8,1,'其他',8);
+
+
+CREATE PROCEDURE `p_sys_prefix_sno_get_inc`(IN v_prefix VARCHAR(32),IN v_increment INT,OUT re_lastno  BIGINT)
+BEGIN
+SELECT lastno INTO re_lastno  FROM t_sys_prefix_sno WHERE prefix=v_prefix;
+IF (re_lastno IS NOT null OR re_lastno > 0) THEN
+	UPDATE t_sys_prefix_sno SET lastno = lastno + v_increment WHERE prefix=v_prefix;
+	COMMIT;
+END IF;
+END
