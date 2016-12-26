@@ -45,10 +45,11 @@ CREATE TABLE `t_mo_approval_step_mold` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `enterprise_id` bigint(20) DEFAULT NULL,
   `cust_id` bigint(20) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `step` tinyint(4) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL COMMENT '流程模型名称',
+  `step` tinyint(4) DEFAULT NULL COMMENT '用户流程步骤',
   `show_seq` tinyint(4) DEFAULT NULL COMMENT '显示顺序',
   `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
+  `orgl_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='审批流程模型表';
 
@@ -63,11 +64,19 @@ INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (7,1,'陪产
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (8,1,'其他',8);
 
 
-CREATE PROCEDURE `p_sys_prefix_sno_get_inc`(IN v_prefix VARCHAR(32),IN v_increment INT,OUT re_lastno  BIGINT)
+DELIMITER $$
+CREATE PROCEDURE `p_getAndIncrementSysPrefixSno`(
+IN v_prefix VARCHAR(32),
+IN v_increment INT,
+OUT re_lastno  BIGINT
+)
+    COMMENT '用于返回最新序号，并递增一定增量'
 BEGIN
 SELECT lastno INTO re_lastno  FROM t_sys_prefix_sno WHERE prefix=v_prefix;
 IF (re_lastno IS NOT null OR re_lastno > 0) THEN
 	UPDATE t_sys_prefix_sno SET lastno = lastno + v_increment WHERE prefix=v_prefix;
 	COMMIT;
 END IF;
-END
+END$$
+DELIMITER ;
+
