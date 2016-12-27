@@ -37,7 +37,7 @@ CREATE TABLE `t_mo_approval` (
   `applic_id` bigint(20) NOT NULL COMMENT '关联t_mo_application',
   `status` tinyint(4) DEFAULT '0' COMMENT '用户审批结果 0:待审核 1:不同意 2:同意',
   `approval_time` bigint(20) DEFAULT NULL COMMENT '审核时间',
-  `disagree_reason` varchar(300) DEFAULT NULL COMMENT '理由',
+  `reason` varchar(300) DEFAULT NULL COMMENT '理由',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批表';
 
