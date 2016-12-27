@@ -4,7 +4,7 @@ CREATE TABLE `t_mo_application` (
   `cust_id` bigint(20) NOT NULL COMMENT '用户ID',
   `type_id` int(11) DEFAULT NULL COMMENT '申请类型Id',
   `content` varchar(1000) DEFAULT NULL COMMENT '申请理由',
-  `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
+  `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 4：报销申请',
   `create_time` bigint(20) DEFAULT NULL COMMENT '创建时间',
   `update_time` bigint(20) DEFAULT NULL COMMENT '更新时间',
   `status` tinyint(4) DEFAULT '0' COMMENT '审批状态，0:待审批 1:审批中 2:不同意 3:已同意',
@@ -29,6 +29,7 @@ CREATE TABLE `t_mo_application_type` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='申请类型';
 
+
 CREATE TABLE `t_mo_approval` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `enterprise_id` bigint(20) NOT NULL COMMENT '机构学校ID',
@@ -39,7 +40,7 @@ CREATE TABLE `t_mo_approval` (
   `approval_time` bigint(20) DEFAULT NULL COMMENT '审核时间',
   `reason` varchar(300) DEFAULT NULL COMMENT '理由',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批表';
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COMMENT='审批表';
 
 CREATE TABLE `t_mo_approval_step_mold` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
