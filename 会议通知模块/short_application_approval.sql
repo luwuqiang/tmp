@@ -21,6 +21,67 @@ CREATE TABLE `t_mo_application_leave` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='请假申请表';
 
+
+CREATE TABLE `t_mo_application_account` (
+  `id` bigint(20) NOT NULL,
+  `applic_id` bigint(20) DEFAULT NULL,
+  `amount` double DEFAULT '0' COMMENT '总金额',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='财务申请表';
+
+CREATE TABLE `t_mo_application_account_item` (
+  `id` int(11) NOT NULL,
+  `applic_id` bigint(20) NOT NULL,
+  `amount` double DEFAULT '0',
+  `detail_desc` varchar(300) DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='报销明细表';
+
+
+CREATE TABLE `t_mo_application_purchase` (
+  `id` bigint(20) NOT NULL,
+  `applic_id` bigint(20) NOT NULL,
+  `amount` double DEFAULT NULL COMMENT '总金额',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='采购申请表';
+
+CREATE TABLE `t_mo_application_purchase_item` (
+  `id` bigint(20) NOT NULL,
+  `applic_id` bigint(20) NOT NULL,
+  `name` varchar(20) DEFAULT NULL COMMENT '物品名称',
+  `amount` int(11) DEFAULT '0' COMMENT '总数量',
+  `ref_price` double DEFAULT '0' COMMENT '参考价格',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='采购明细';
+
+CREATE TABLE `t_mo_application_out` (
+  `id` bigint(20) NOT NULL,
+  `applic_id` bigint(20) DEFAULT NULL,
+  `begin_time` bigint(20) DEFAULT NULL COMMENT '开始时间',
+  `end_time` bigint(20) DEFAULT NULL COMMENT '结束时间',
+  `take_hours` double DEFAULT NULL COMMENT '外出花费时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='外出申请表';
+
+
+CREATE TABLE `t_mo_approval_step_mold` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `enterprise_id` bigint(20) DEFAULT NULL,
+  `name` varchar(100) DEFAULT NULL COMMENT '流程模型名称',
+  `show_seq` tinyint(4) DEFAULT NULL COMMENT '显示顺序',
+  `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
+  `orgl_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='审批流程模型表';
+
+CREATE TABLE `t_mo_approval_step_mold_item` (
+  `id` bigint(20) NOT NULL,
+  `step_mold_id` bigint(20) DEFAULT NULL,
+  `cust_id` bigint(20) DEFAULT NULL COMMENT '审批人ID',
+  `step` tinyint(4) DEFAULT NULL COMMENT '使用1.2.3 ...来标记流程',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='审批流程模型明细项';
+
 CREATE TABLE `t_mo_application_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `mold` tinyint(4) NOT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
@@ -45,9 +106,7 @@ CREATE TABLE `t_mo_approval` (
 CREATE TABLE `t_mo_approval_step_mold` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `enterprise_id` bigint(20) DEFAULT NULL,
-  `cust_id` bigint(20) DEFAULT NULL,
   `name` varchar(100) DEFAULT NULL COMMENT '流程模型名称',
-  `step` tinyint(4) DEFAULT NULL COMMENT '用户流程步骤',
   `show_seq` tinyint(4) DEFAULT NULL COMMENT '显示顺序',
   `mold` tinyint(4) DEFAULT NULL COMMENT '模型：1:请假申请  2:采购申请 3:外出申请 3：报销申请',
   `orgl_id` bigint(20) DEFAULT NULL,
