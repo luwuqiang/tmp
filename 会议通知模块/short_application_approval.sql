@@ -111,6 +111,7 @@ INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (6,1,'产假
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (7,1,'陪产假',7);
 INSERT INTO `t_mo_application_type` (`id`,`mold`,`name`,`seq`) VALUES (8,1,'其他',8);
 
+INSERT INTO `t_sys_prefix_sno` (`lastno`, `note_id`, `opertype`, `prefix`) VALUES (17010000000000, 1, 1, 17);
 
 DELIMITER $$
 CREATE PROCEDURE `p_getAndIncrementSysPrefixSno`(
