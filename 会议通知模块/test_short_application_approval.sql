@@ -1,6 +1,6 @@
-INSERT INTO `t_sys_prefix_sno` (`lastno`, `note_id`, `opertype`, `prefix`) VALUES (17010000000000, 1, 1, 17);
+ÔªøINSERT INTO `t_sys_prefix_sno` (`lastno`, `note_id`, `opertype`, `prefix`) VALUES (17010000000000, 1, 1, 17);
 
-INSERT INTO `t_sys_schoolorg` (`id`,`cust_id`,`orgmodel_id`,`isshow`,`user_id`,`company_code`,`full_name`,`short_name`,`contactor_sn`,`business_code`,`remark`,`photokey`,`type`,`order_num`,`parent_id`,`leader`,`region_code`,`create_time`,`creator_person`,`update_time`,`updater`,`isValid`,`max_assign_members`) VALUES (10002,NULL,2010000063157,NULL,NULL,NULL,'ΩÃŒÒ¥¶','ΩÃŒÒ¥¶',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `t_sys_schoolorg` (`id`,`cust_id`,`orgmodel_id`,`isshow`,`user_id`,`company_code`,`full_name`,`short_name`,`contactor_sn`,`business_code`,`remark`,`photokey`,`type`,`order_num`,`parent_id`,`leader`,`region_code`,`create_time`,`creator_person`,`update_time`,`updater`,`isValid`,`max_assign_members`) VALUES (10002,NULL,2010000063157,NULL,NULL,NULL,'ÊïôÂä°Â§Ñ','ÊïôÂä°Â§Ñ',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 INSERT INTO `t_sys_schoolroleuser_ref` (`role_id`, `user_id`) VALUES (15010000000000, 4010000005402);
 INSERT INTO `t_sys_schoolroleuser_ref` (`role_id`, `user_id`) VALUES (15010000000000, 4010000005168);
@@ -8,18 +8,18 @@ INSERT INTO `t_sys_schoolroleuser_ref` (`role_id`, `user_id`) VALUES (1501000000
 INSERT INTO `t_sys_schoolroleuser_ref` (`role_id`, `user_id`) VALUES (15010000000000, 4010000005409);
 INSERT INTO `t_sys_schoolorgrole_ref` (`org_id`, `role_id`) VALUES ('10002', '15010000000000');
 
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (1,'2010000063157', '«ÎºŸ∞ÎÃÏ', '1', '1', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (2,'2010000063157', '«ÎºŸ1ÃÏ“‘…œ(∫¨)', '2', '1', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (3,'2010000063157', '«ÎºŸ3ÃÏ“‘…œ(∫¨)', '3', '1', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (4,'2010000063157', '…Û≈˙“ª', '1', '2', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (5,'2010000063157', '…Û≈˙∂˛', '2', '2', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (6,'2010000063157', '…Û≈˙»˝', '3', '2', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (7,'2010000063157', '…Û≈˙Àƒ', '1', '3', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (8,'2010000063157', '…Û≈˙ŒÂ', '2', '3', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (9,'2010000063157', '…Û≈˙¡˘', '3', '3', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (10,'2010000063157', '…Û≈˙∆ﬂ', '1', '4', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (11,'2010000063157', '…Û≈˙∞À', '2', '4', '10002');
-INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (12,'2010000063157', '…Û≈˙æ≈', '3', '4', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (1,'2010000063157', 'ËØ∑ÂÅáÂçäÂ§©', '1', '1', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (2,'2010000063157', 'ËØ∑ÂÅá1Â§©‰ª•‰∏ä(Âê´)', '2', '1', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (3,'2010000063157', 'ËØ∑ÂÅá3Â§©‰ª•‰∏ä(Âê´)', '3', '1', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (4,'2010000063157', 'ÂÆ°Êâπ‰∏Ä', '1', '2', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (5,'2010000063157', 'ÂÆ°Êâπ‰∫å', '2', '2', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (6,'2010000063157', 'ÂÆ°Êâπ‰∏â', '3', '2', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (7,'2010000063157', 'ÂÆ°ÊâπÂõõ', '1', '3', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (8,'2010000063157', 'ÂÆ°Êâπ‰∫î', '2', '3', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (9,'2010000063157', 'ÂÆ°ÊâπÂÖ≠', '3', '3', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (10,'2010000063157', 'ÂÆ°Êâπ‰∏É', '1', '4', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (11,'2010000063157', 'ÂÆ°ÊâπÂÖ´', '2', '4', '10002');
+INSERT INTO `t_mo_approval_step_mold` (`id`, `enterprise_id`, `name`, `show_seq`, `mold`, `orgl_id`) VALUES (12,'2010000063157', 'ÂÆ°Êâπ‰πù', '3', '4', '10002');
 
 
 INSERT INTO `chattest`.`t_mo_approval_step_mold_item` (`step_mold_id`, `cust_id`, `step`) VALUES ('1', '4010000005413', '1');
