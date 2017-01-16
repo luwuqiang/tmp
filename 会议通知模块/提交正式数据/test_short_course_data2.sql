@@ -1,0 +1,14 @@
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (181,4010000005413,5,6,2,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (182,4010000005413,5,6,3,2,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (183,4010000005413,5,5,1,3,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (184,4010000005413,6,7,1,3,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (185,4010000005413,6,7,8,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (186,4010000005413,7,6,1,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (187,4010000005413,7,7,2,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (188,4010000005413,6,1,1,2,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (189,4010000005413,7,2,1,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (190,4010000005173,4,6,1,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (191,4010000005413,4,6,2,2,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (192,4010000005173,4,7,5,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (193,4010000005173,4,7,6,1,8010000001743);
+INSERT INTO `t_mo_course_schedule` (`id`,`cust_id`,`week_id`,`week_day_num`,`lesson_id`,`course_id`,`class_id`) VALUES (194,4010000005173,4,7,7,1,8010000001743);
